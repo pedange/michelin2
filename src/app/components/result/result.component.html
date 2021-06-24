@@ -1,0 +1,32 @@
+<div style="display: flex; width: 100%; justify-content: space-between; align-items: center">
+  <button mat-stroked-button
+          (click)="close()"
+  >
+    <i class="fad fa-long-arrow-left" style="margin-right: 5px;"></i> Retour au
+    formulaire
+  </button>
+  <div class="result-title">{{datasheets.length}} Résultat(s)</div>
+  <button mat-stroked-button
+          (click)="copyTable(table)"
+  >
+    Copier le tableau <i style="margin-left: 5px" [class]="'fa-fw ' + copyBtn.icon" [style.color]="copyBtn.color"></i>
+  </button>
+</div>
+<table #table style="width: 100%">
+  <thead>
+  <tr>
+    <th>#</th>
+    <th *ngFor="let field of fields">
+      {{field.libelle}}
+    </th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let datasheet of datasheets; let i = index">
+    <td>{{i}}</td>
+    <td *ngFor="let field of fields">
+      {{datasheet[field.code]}}
+    </td>
+  </tr>
+  </tbody>
+</table>

@@ -1,0 +1,131 @@
+<div style="text-align: center">
+
+  <ng-container *ngIf="!isLoading && !poiList">
+
+    <!-- NOMBRE ETOILES -->
+    <div style="width: 100%; margin-bottom: 2em">
+
+      <div style="font-weight: bold; margin-bottom: 1em">
+        Nombre d'étoiles Michelin
+      </div>
+      <div>
+        <ng-container *ngFor="let star of starList">
+          <mat-checkbox [(ngModel)]="star.checked"
+                        style="margin: 0 12px;"
+                        [matTooltip]="star.label"
+          >
+            <ng-container *ngFor="let i of Arr(star.count || 1).fill(1)">
+              <i class="fa-fw fa-2x fa-star"
+                 [class.fal]="star.count<= 0"
+                 [class.fas]="star.count> 0"
+              ></i>
+            </ng-container>
+          </mat-checkbox>
+
+        </ng-container>
+      </div>
+
+    </div>
+
+    <hr>
+    <!-- LISTE DES CHAMPS -->
+    <div style="width: 100%; margin-bottom: 2em">
+
+      <div style="font-weight: bold; margin-bottom: 1em;; margin-top: 1em;">
+        Liste des champs à afficher (<a style="cursor: pointer; color: #007bff" matTooltip="Tout séléctionner"
+                                        (click)="selectAllFields()"><i
+        class="fal fa-fw fa-check-square"></i></a> /
+        <a style="cursor: pointer; color: #007bff" (click)="unselectAllFields()" matTooltip="Tout enlever"><i
+          class="fal fa-fw fa-trash-alt"></i></a>)
+      </div>
+      <div>
+        <ng-container *ngFor="let field of fieldList">
+          <mat-checkbox
+            [(ngModel)]="field.checked"
+            style="margin: 0 12px;"
+            [matTooltip]="field.libelle"
+          >
+            {{field.libelle}}
+          </mat-checkbox>
+        </ng-container>
+      </div>
+
+    </div>
+
+
+    <hr>
+    <!-- LISTE DES PAYS -->
+    <div style="width: 100%; margin-bottom: 2em">
+
+      <div style="font-weight: bold; margin-bottom: 1em; margin-top: 1em">
+        Liste des pays à parcourir (<a style="cursor: pointer; color: #007bff" matTooltip="Tout séléctionner"
+                                       (click)="selectAllCountries()"><i
+        class="fal fa-fw fa-check-square"></i></a> /
+        <a style="cursor: pointer; color: #007bff" (click)="unselectAllCountries()" matTooltip="Tout enlever"><i
+          class="fal fa-fw fa-trash-alt"></i></a>)
+      </div>
+
+      <div>
+        <div style="margin-bottom: 1em; margin-top: 1em; font-weight: bold; color: grey">Pays de l'UE</div>
+        <div
+          style="display: grid; width: 100%; grid-template-columns: 1fr 1fr 1fr 1fr; justify-items: left; max-width: 1000px; margin:auto ">
+          <ng-container *ngFor="let country of countryEuList">
+            <div>
+              <mat-checkbox
+                [(ngModel)]="country.checked"
+                style="margin: 0 12px;"
+              >
+                {{country.name}}
+              </mat-checkbox>
+            </div>
+          </ng-container>
+        </div>
+
+        <div style="margin-bottom: 1em; margin-top: 1em; font-weight: bold; color: grey">Autres pays</div>
+        <div
+          style="display: grid; width: 100%; grid-template-columns: 1fr 1fr 1fr 1fr; justify-items: left; max-width: 1000px; margin:auto ">
+          <ng-container *ngFor="let country of countryOtherList">
+            <div>
+              <mat-checkbox [(ngModel)]="country.checked" style="margin: 0 12px;">
+                {{country.name}}
+              </mat-checkbox>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+    </div>
+
+    <hr>
+    <!--BUTTONS-->
+    <button mat-stroked-button
+            style="margin-top: 1em"
+            (click)="submit()"
+            [disabled]="!canSubmit || isLoading"
+    >
+      Afficher les résultats
+    </button>
+  </ng-container>
+
+
+  <ng-container *ngIf="isLoading">
+    <div style="width: 100%; margin-top: 2em; text-align: center">
+      <i class="fad fa-fw fa-spinner fa-spin"></i> Chargement... {{loaderInfo?.step || 0}}/{{loaderInfo?.nbSteps || 0}}
+      <div style="max-width: 500px; padding-top: 1em; margin: auto">
+        <mat-progress-bar
+          mode="determinate"
+          [value]="(loaderInfo?.step || 0) / (loaderInfo?.nbSteps || 1) * 100"
+          [bufferValue]="0">
+        </mat-progress-bar>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="!isLoading && poiList">
+    <app-result
+      [datasheets]="Arr.from(poiList.values())"
+      [fields]="selectedFields"
+      (close)="reset()"
+    ></app-result>
+  </ng-container>
+</div>

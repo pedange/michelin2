@@ -1,0 +1,25 @@
+<div style="text-align: center; padding-top: 3em;">
+
+  <div>
+    <div style="font-weight: bold; margin-bottom: 1em">
+      Vous devez renseigner une Clé <i class="fas fa-key"></i> valide pour pouvoir utiliser ce service :
+    </div>
+    <!--FORM-->
+    <div>
+      <mat-form-field style="min-width: 350px">
+        <input matInput type="text" [formControl]="keyCtl" placeholder="RESTGP2021...">
+        <button *ngIf="keyCtl.value" matSuffix mat-icon-button aria-label="Clear" (click)="keyCtl.reset()">
+          <i class="fal fa-fw fa-times"></i>
+        </button>
+      </mat-form-field>
+    </div>
+    <!--BUTTONS-->
+    <div>
+      <button mat-stroked-button (click)="submit()">Valider</button>
+    </div>
+    <!--GET KEY-->
+    <div style="margin-top: 1em">
+      <i>Obtenez une clé gratuitement <a target="blank" href="https://signup-dev.viamichelin.com/?lang=fra">ici</a></i>
+    </div>
+  </div>
+</div>
