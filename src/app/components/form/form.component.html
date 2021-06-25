@@ -57,19 +57,9 @@
     <!-- LISTE DES PAYS -->
     <div style="width: 100%; margin-bottom: 2em">
 
-      <div style="font-weight: bold; margin-bottom: 1em; margin-top: 1em">
-        Liste des pays à parcourir (<a style="cursor: pointer; color: #007bff" matTooltip="Tout séléctionner"
-                                       (click)="selectAllCountries()"><i
-        class="fal fa-fw fa-check-square"></i></a> /
-        <a style="cursor: pointer; color: #007bff" (click)="unselectAllCountries()" matTooltip="Tout enlever"><i
-          class="fal fa-fw fa-trash-alt"></i></a>)
-      </div>
-
-      <div>
-        <div style="margin-bottom: 1em; margin-top: 1em; font-weight: bold; color: grey">Pays de l'UE</div>
-        <div
-          style="display: grid; width: 100%; grid-template-columns: 1fr 1fr 1fr 1fr; justify-items: left; max-width: 1000px; margin:auto ">
-          <ng-container *ngFor="let country of countryEuList">
+      <ng-template #countryCheckBoxesTemplate let-countries="countries">
+        <div class="country-grid" style="width: 100%; margin:auto">
+          <ng-container *ngFor="let country of countries">
             <div>
               <mat-checkbox
                 [(ngModel)]="country.checked"
@@ -80,18 +70,24 @@
             </div>
           </ng-container>
         </div>
+      </ng-template>
+
+      <div style="font-weight: bold; margin-bottom: 1em; margin-top: 1em">
+        Liste des pays à parcourir (<a style="cursor: pointer; color: #007bff" matTooltip="Tout séléctionner"
+                                       (click)="selectAllCountries()"><i
+        class="fal fa-fw fa-check-square"></i></a> /
+        <a style="cursor: pointer; color: #007bff" (click)="unselectAllCountries()" matTooltip="Tout enlever"><i
+          class="fal fa-fw fa-trash-alt"></i></a>)
+      </div>
+
+      <div>
+        <div style="margin-bottom: 1em; margin-top: 1em; font-weight: bold; color: grey">Pays de l'UE</div>
+        <ng-container [ngTemplateOutlet]="countryCheckBoxesTemplate"
+                      [ngTemplateOutletContext]="{countries: countryEuList}"></ng-container>
 
         <div style="margin-bottom: 1em; margin-top: 1em; font-weight: bold; color: grey">Autres pays</div>
-        <div
-          style="display: grid; width: 100%; grid-template-columns: 1fr 1fr 1fr 1fr; justify-items: left; max-width: 1000px; margin:auto ">
-          <ng-container *ngFor="let country of countryOtherList">
-            <div>
-              <mat-checkbox [(ngModel)]="country.checked" style="margin: 0 12px;">
-                {{country.name}}
-              </mat-checkbox>
-            </div>
-          </ng-container>
-        </div>
+        <ng-container [ngTemplateOutlet]="countryCheckBoxesTemplate"
+                      [ngTemplateOutletContext]="{countries: countryOtherList}"></ng-container>
       </div>
 
     </div>

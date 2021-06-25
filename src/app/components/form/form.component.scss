@@ -1,5 +1,31 @@
-hr{
+hr {
   width: 50%;
   border-width: 0.5px;
   border-color: #007bff2b;
+}
+
+.country-grid {
+  border: solid 1px grey;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  justify-items: left;
+  max-width: 1000px;
+}
+
+@media (max-width: 500px) {
+  .country-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 500px) and(max-width: 750px) {
+  .country-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 750px) and(max-width: 1000px) {
+  .country-grid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 }
