@@ -14,12 +14,14 @@
                         style="margin: 0 12px;"
                         [matTooltip]="star.label"
           >
-            <ng-container *ngFor="let i of Arr(star.count || 1).fill(1)">
-              <i class="fa-fw fa-2x fa-star"
-                 [class.fal]="star.count<= 0"
-                 [class.fas]="star.count> 0"
-              ></i>
-            </ng-container>
+            <div style="padding-left: 5px;">
+              <ng-container *ngFor="let i of Arr(star.count || 1).fill(1)">
+                <i class="fa-fw fa-star" style="font-size:1.5em; vertical-align: text-bottom"
+                   [class.fal]="star.count<= 0"
+                   [class.fas]="star.count> 0"
+                ></i>
+              </ng-container>
+            </div>
           </mat-checkbox>
 
         </ng-container>
@@ -29,14 +31,14 @@
 
     <hr>
     <!-- LISTE DES CHAMPS -->
-    <div style="width: 100%; margin-bottom: 2em">
+    <div style="width: 100%; padding-bottom: 2em; max-width: 1000px; margin:auto">
 
-      <div style="font-weight: bold; margin-bottom: 1em;; margin-top: 1em;">
+      <div style="font-weight: bold; margin-bottom: 1em; margin-top: 2em;">
         Liste des champs à afficher (<a style="cursor: pointer; color: #007bff" matTooltip="Tout séléctionner"
-                                        (click)="selectAllFields()"><i
-        class="fal fa-fw fa-check-square"></i></a> /
-        <a style="cursor: pointer; color: #007bff" (click)="unselectAllFields()" matTooltip="Tout enlever"><i
-          class="fal fa-fw fa-trash-alt"></i></a>)
+                                        (click)="selectAllFields()"><i class="fal fa-fw fa-check-square"></i></a> /
+        <a style="cursor: pointer; color: #007bff" (click)="unselectAllFields()" matTooltip="Tout enlever">
+          <i class="fal fa-fw fa-trash-alt"></i>
+        </a>)
       </div>
       <div>
         <ng-container *ngFor="let field of fieldList">
@@ -72,7 +74,7 @@
         </div>
       </ng-template>
 
-      <div style="font-weight: bold; margin-bottom: 1em; margin-top: 1em">
+      <div style="font-weight: bold; margin-bottom: 1em; margin-top: 2em">
         Liste des pays à parcourir (<a style="cursor: pointer; color: #007bff" matTooltip="Tout séléctionner"
                                        (click)="selectAllCountries()"><i
         class="fal fa-fw fa-check-square"></i></a> /
@@ -95,7 +97,7 @@
     <hr>
     <!--BUTTONS-->
     <button mat-stroked-button
-            style="margin-top: 1em"
+            style="margin-top: 1em; margin-bottom: 2em"
             (click)="submit()"
             [disabled]="!canSubmit || isLoading"
     >
