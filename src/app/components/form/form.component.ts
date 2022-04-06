@@ -1,18 +1,18 @@
-import {Component} from '@angular/core';
-import {StarModel} from '../static/models/star.model';
-import {StarList} from '../static/data/star.list';
-import {CountryModel} from '../static/models/country.model';
-import {CountryList} from '../static/data/country.list';
-import {FieldList} from '../static/data/field.list';
-import {FieldModel} from '../static/models/field.model';
-import {GridHelper} from '../static/helpers/grid.helper';
+import {HttpClient} from '@angular/common/http';
 import {flatten} from '@angular/compiler';
+import {Component} from '@angular/core';
+import {Router} from '@angular/router';
 import {forkJoin, of} from 'rxjs';
 import {catchError, mergeMap, tap} from 'rxjs/operators';
-import {HttpClient} from '@angular/common/http';
-import {PoiDatasheetModel} from '../static/models/api-response.model';
 import {PoiRestService} from '../../services/poi.rest.service';
-import {Router} from '@angular/router';
+import {CountryList} from '../static/data/country.list';
+import {FieldList} from '../static/data/field.list';
+import {StarList} from '../static/data/star.list';
+import {GridHelper} from '../static/helpers/grid.helper';
+import {PoiDatasheetModel} from '../static/models/api-response.model';
+import {CountryModel} from '../static/models/country.model';
+import {FieldModel} from '../static/models/field.model';
+import {StarModel} from '../static/models/star.model';
 
 @Component({
   selector: 'app-form',
@@ -85,7 +85,8 @@ export class FormComponent {
       of({})
         .pipe(tap(() => this.loaderInfo = {step: 0, nbSteps: coords.length}))
         .pipe(tap(() => this.isLoading = true))
-        .pipe(mergeMap(() => forkJoin(coords.map((coord: string) => this.poiRestService.callApi(allPoi, coord, params).pipe(tap(() => this.loaderInfo.step++))))))
+        .pipe(mergeMap(() => forkJoin(coords.map((coord: string) => this.poiRestService.callApi(allPoi, coord, params)
+          .pipe(tap(() => this.loaderInfo.step++))))))
         .pipe(tap(() => this.poiList = allPoi))
         .pipe(tap(() => this.isLoading = false))
         .pipe(catchError((err) => {

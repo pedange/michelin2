@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {ApiResponseModel, PoiDatasheetModel} from '../components/static/models/api-response.model';
+import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {catchError, map, mergeMap, tap} from 'rxjs/operators';
+import {ApiResponseModel, PoiDatasheetModel} from '../components/static/models/api-response.model';
 
 @Injectable({providedIn: 'root'})
 export class PoiRestService {
@@ -32,8 +32,8 @@ export class PoiRestService {
       ))
       .pipe(
         mergeMap((response: ApiResponseModel) => {
-          const nbPoiRecus: number = response?.poiList.length ?? 0;
-          if (nbPoiRecus >= nbResults) {
+          const nbPoiReceived: number = response?.poiList.length ?? 0;
+          if (nbPoiReceived >= nbResults) {
             // on fait un autre appel
             return this.callApi(result, coord, params, firstResult + nbResults);
           } else {
@@ -44,7 +44,7 @@ export class PoiRestService {
 
   private buildUrl(coord: string, stars: number[], nbResults: number, firstResult: number): string {
     const authKey: string = localStorage.getItem('michelinApiKey'); //?? 'RESTGP20210621092536412739709696';
-    const api: string = `http://apir.viamichelin.com/apir/2/findPoi.json2/RESTAURANT/eng`;
+    const api: string = `https://secure-apir.viamichelin.com/apir/2/findPoi.json2/RESTAURANT/eng`;
     const params: string = encodeURI([
       ['center', coord].join('='),
       ['nb', nbResults].join('='),
@@ -58,7 +58,7 @@ export class PoiRestService {
       ['sidx', firstResult].join('='),
     ].join('&'));
     return `${api}?${params}`;
-  };
+  }
 
   public testApi(): Observable<boolean> {
     const nbResults: number = 100;
